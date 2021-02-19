@@ -25,14 +25,26 @@ extension Source: RawRepresentable {
 
     public var rawValue: FirestoreSource {
         switch self {
-            case .default: return FirestoreSource.default
-            case .server: return FirestoreSource.server
-            case .cache: return FirestoreSource.cache
+            case .default: return .default
+            case .server: return .server
+            case .cache: return .cache
         }
     }
 }
 
-extension DocumentReference: DocumentReferencePublishable {
+extension DocumentReference: DocumentPublishable {
+
+    public func get<Document>() -> AnyPublisher<Document?, Error> where Document : Decodable {
+        self.getDocument()
+            .tryMap({ try $0?.data(as: Document.self)  })
+            .eraseToAnyPublisher()
+    }
+
+    public func addDocumentListener<Document>() -> AnyPublisher<Document?, Error> where Document : Decodable {
+        self.addSnapshotListener()
+            .tryMap({ try $0?.data(as: Document.self)  })
+            .eraseToAnyPublisher()
+    }
 
     public func get<Document>(source: Source = .default) -> AnyPublisher<Document?, Error> where Document : Decodable {
         self.getDocument(source: source.rawValue)
@@ -71,7 +83,19 @@ extension DocumentReference: DocumentReferencePublishable {
     }
 }
 
-extension Query: QueryPublishable {
+extension Query: CollectionPublishable {
+
+    public func get<Document>() -> AnyPublisher<[Document]?, Error> where Document : Decodable {
+        self.getDocument()
+            .tryMap { try $0?.documents.compactMap({ try $0.data(as: Document.self) }) }
+            .eraseToAnyPublisher()
+    }
+
+    public func addDocumentsListener<Document>() -> AnyPublisher<[Document]?, Error> where Document : Decodable {
+        self.addSnapshotListener()
+            .tryMap { try $0?.documents.compactMap({ try $0.data(as: Document.self) }) }
+            .eraseToAnyPublisher()
+    }
 
     public func get<Document>(source: Source) -> AnyPublisher<[Document]?, Error> where Document : Decodable {
         self.getDocument(source: source.rawValue)
@@ -109,10 +133,3 @@ extension Query: QueryPublishable {
         }.eraseToAnyPublisher()
     }
 }
-
-//public final class FirestoreRepository {
-//
-//    func get<T: DocumentReferencePublishable>(documentReference: T, source) {
-//        documentReference.get(source: <#T##Source#>)
-//    }
-//}

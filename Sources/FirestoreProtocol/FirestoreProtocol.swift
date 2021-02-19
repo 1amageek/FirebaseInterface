@@ -14,17 +14,21 @@ public enum Source {
     case cache
 }
 
-public protocol DocumentReferencePublishable {
+public protocol DocumentPublishable {
+    func get<Document: Decodable>() -> AnyPublisher<Document?, Error>
     func get<Document: Decodable>(source: Source) -> AnyPublisher<Document?, Error>
+    func addDocumentListener<Document: Decodable>() -> AnyPublisher<Document?, Error>
     func addDocumentListener<Document: Decodable>(includeMetadataChanges: Bool) -> AnyPublisher<Document?, Error>
 }
 
-public protocol QueryPublishable {
+public protocol CollectionPublishable {
+    func get<Document: Decodable>() -> AnyPublisher<[Document]?, Error>
     func get<Document: Decodable>(source: Source) -> AnyPublisher<[Document]?, Error>
+    func addDocumentsListener<Document: Decodable>() -> AnyPublisher<[Document]?, Error>
     func addDocumentsListener<Document: Decodable>(includeMetadataChanges: Bool) -> AnyPublisher<[Document]?, Error>
 }
 
-public protocol DocumentReferenceWritable {
+public protocol DocumentWritable {
     func setData<T: Encodable>(from value: T) throws
     func setData<T: Encodable>(from value: T, merge: Bool) throws
     func setData<T: Encodable>(from value: T, merge: Bool, completion: ((Error?) -> Void)?) throws
@@ -34,7 +38,7 @@ public protocol DocumentReferenceWritable {
     func delete(completion: ((Error?) -> Void)?)
 }
 
-public protocol CollectionReferenceWritable {
-    func document() -> DocumentReferenceWritable
-    func document(_ documentPath: String) -> DocumentReferenceWritable
+public protocol CollectionWritable {
+    func document() -> DocumentPublishable
+    func document(_ documentPath: String) -> DocumentPublishable
 }

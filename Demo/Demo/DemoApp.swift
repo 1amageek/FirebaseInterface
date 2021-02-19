@@ -14,9 +14,9 @@ struct DemoApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(
-                    Interactor(repository: Repository(doc: Firestore.firestore().collection("aa").document() ))
-                )
+//                .environmentObject(
+//                    Interactor(repository: Repository(doc: Firestore.firestore().collection("aa").document() ))
+//                )
         }
     }
 }

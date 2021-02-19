@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "FirestoreRepository",
+    name: "FirebaseInterface",
     platforms: [.iOS(.v14)],
     products: [
         .library(
@@ -15,7 +15,7 @@ let package = Package(
             targets: ["FirestoreRepository"]),
     ],
     dependencies: [
-        .package(name: "Firebase", url: "https://github.com/firebase/firebase-ios-sdk.git", .upToNextMajor(from: "7.5.0"))
+        .package(name: "Firebase", url: "https://github.com/firebase/firebase-ios-sdk.git", .upToNextMajor(from: "7.6.0"))
     ],
     targets: [
         .target(

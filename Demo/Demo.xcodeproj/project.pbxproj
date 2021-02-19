@@ -11,10 +11,10 @@
 		1269116525DEA37200A439AA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1269116425DEA37200A439AA /* ContentView.swift */; };
 		1269116725DEA37300A439AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1269116625DEA37300A439AA /* Assets.xcassets */; };
 		1269116A25DEA37300A439AA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1269116925DEA37300A439AA /* Preview Assets.xcassets */; };
-		1288691F25DEA41000587B1C /* FirestoreProtocol in Frameworks */ = {isa = PBXBuildFile; productRef = 1288691E25DEA41000587B1C /* FirestoreProtocol */; };
+		127E2ABB25DF7CBE00CDB3C0 /* FirestoreProtocol in Frameworks */ = {isa = PBXBuildFile; productRef = 127E2ABA25DF7CBE00CDB3C0 /* FirestoreProtocol */; };
+		127E2ABD25DF7CBE00CDB3C0 /* FirestoreRepository in Frameworks */ = {isa = PBXBuildFile; productRef = 127E2ABC25DF7CBE00CDB3C0 /* FirestoreRepository */; };
 		1288692225DEAB3B00587B1C /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 1288692125DEAB3B00587B1C /* FirebaseFirestore */; };
 		1288692425DEAB3B00587B1C /* FirebaseFirestoreSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 1288692325DEAB3B00587B1C /* FirebaseFirestoreSwift-Beta */; };
-		1288692625DEABAF00587B1C /* FirestoreRepository in Frameworks */ = {isa = PBXBuildFile; productRef = 1288692525DEABAF00587B1C /* FirestoreRepository */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,9 +32,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				1288692425DEAB3B00587B1C /* FirebaseFirestoreSwift-Beta in Frameworks */,
-				1288691F25DEA41000587B1C /* FirestoreProtocol in Frameworks */,
-				1288692625DEABAF00587B1C /* FirestoreRepository in Frameworks */,
 				1288692225DEAB3B00587B1C /* FirebaseFirestore in Frameworks */,
+				127E2ABD25DF7CBE00CDB3C0 /* FirestoreRepository in Frameworks */,
+				127E2ABB25DF7CBE00CDB3C0 /* FirestoreProtocol in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,10 +102,10 @@
 			);
 			name = Demo;
 			packageProductDependencies = (
-				1288691E25DEA41000587B1C /* FirestoreProtocol */,
 				1288692125DEAB3B00587B1C /* FirebaseFirestore */,
 				1288692325DEAB3B00587B1C /* FirebaseFirestoreSwift-Beta */,
-				1288692525DEABAF00587B1C /* FirestoreRepository */,
+				127E2ABA25DF7CBE00CDB3C0 /* FirestoreProtocol */,
+				127E2ABC25DF7CBE00CDB3C0 /* FirestoreRepository */,
 			);
 			productName = Demo;
 			productReference = 1269115F25DEA37200A439AA /* Demo.app */;
@@ -366,9 +366,13 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		1288691E25DEA41000587B1C /* FirestoreProtocol */ = {
+		127E2ABA25DF7CBE00CDB3C0 /* FirestoreProtocol */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = FirestoreProtocol;
+		};
+		127E2ABC25DF7CBE00CDB3C0 /* FirestoreRepository */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FirestoreRepository;
 		};
 		1288692125DEAB3B00587B1C /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -379,10 +383,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1288692025DEAB3B00587B1C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseFirestoreSwift-Beta";
-		};
-		1288692525DEABAF00587B1C /* FirestoreRepository */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = FirestoreRepository;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
