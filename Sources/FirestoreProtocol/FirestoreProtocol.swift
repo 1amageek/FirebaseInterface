@@ -29,6 +29,12 @@ public protocol CollectionPublishable {
 }
 
 public protocol DocumentWritable {
+    func setData(_ documentData: [String: Any])
+    func setData(_ documentData: [String: Any], completion: ((Error?) -> Void)?)
+    func setData(_ documentData: [String: Any], merge: Bool)
+    func setData(_ documentData: [String: Any], merge: Bool, completion: ((Error?) -> Void)?)
+    func setData(_ documentData: [String: Any], mergeFields: [Any])
+    func setData(_ documentData: [String: Any], mergeFields: [Any], completion: ((Error?) -> Void)?)
     func setData<T: Encodable>(from value: T) throws
     func setData<T: Encodable>(from value: T, merge: Bool) throws
     func setData<T: Encodable>(from value: T, merge: Bool, completion: ((Error?) -> Void)?) throws
