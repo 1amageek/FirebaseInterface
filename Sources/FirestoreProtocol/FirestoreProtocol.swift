@@ -39,6 +39,6 @@ public protocol DocumentWritable {
 }
 
 public protocol CollectionWritable {
-    func document() -> DocumentPublishable
-    func document(_ documentPath: String) -> DocumentPublishable
+    func document() -> DocumentPublishable & DocumentWritable
+    func document(_ documentPath: String) -> DocumentPublishable & DocumentWritable
 }
