@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  FirestoreProtocol.swift
+//
 //
 //  Created by nori on 2021/02/18.
 //
@@ -14,18 +14,22 @@ public enum Source {
     case cache
 }
 
+public enum FirestoreError: Error {
+    case nilResultError
+}
+
 public protocol DocumentPublishable {
     func get<Document: Decodable>() -> AnyPublisher<Document?, Error>
     func get<Document: Decodable>(source: Source) -> AnyPublisher<Document?, Error>
-    func addDocumentListener<Document: Decodable>() -> AnyPublisher<Document?, Error>
-    func addDocumentListener<Document: Decodable>(includeMetadataChanges: Bool) -> AnyPublisher<Document?, Error>
+    func publisher<Document: Decodable>() -> AnyPublisher<Document?, Error>
+    func publisher<Document: Decodable>(includeMetadataChanges: Bool) -> AnyPublisher<Document?, Error>
 }
 
 public protocol CollectionPublishable {
     func get<Document: Decodable>() -> AnyPublisher<[Document]?, Error>
     func get<Document: Decodable>(source: Source) -> AnyPublisher<[Document]?, Error>
-    func addDocumentsListener<Document: Decodable>() -> AnyPublisher<[Document]?, Error>
-    func addDocumentsListener<Document: Decodable>(includeMetadataChanges: Bool) -> AnyPublisher<[Document]?, Error>
+    func publisher<Document: Decodable>() -> AnyPublisher<[Document]?, Error>
+    func publisher<Document: Decodable>(includeMetadataChanges: Bool) -> AnyPublisher<[Document]?, Error>
 }
 
 public protocol DocumentWritable {
