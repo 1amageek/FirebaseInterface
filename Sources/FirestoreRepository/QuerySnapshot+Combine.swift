@@ -18,7 +18,7 @@ extension QuerySnapshot {
         private var registration: ListenerRegistration?
 
         init(subscriber: SubscriberType, query: Query, includeMetadataChanges: Bool) {
-            registration = query.addSnapshotListener (includeMetadataChanges: includeMetadataChanges) { (querySnapshot, error) in
+            registration = query.addSnapshotListener (includeMetadataChanges: includeMetadataChanges) { [subscriber] (querySnapshot, error) in
                 if let error = error {
                     subscriber.receive(completion: .failure(error))
                 } else if let querySnapshot = querySnapshot {

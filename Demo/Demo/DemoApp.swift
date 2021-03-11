@@ -6,17 +6,27 @@
 //
 
 import SwiftUI
-import FirebaseFirestore
+import Firebase
 import FirestoreRepository
+
 
 @main
 struct DemoApp: App {
+
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
     var body: some Scene {
         WindowGroup {
             ContentView()
-//                .environmentObject(
-//                    Interactor(repository: Repository(doc: Firestore.firestore().collection("aa").document() ))
-//                )
+                .environmentObject(Interactor(repository: Repository(userID: "aa")))
         }
+    }
+}
+
+class AppDelegate: UIResponder, UIApplicationDelegate {
+
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        FirebaseApp.configure()
+        return true
     }
 }

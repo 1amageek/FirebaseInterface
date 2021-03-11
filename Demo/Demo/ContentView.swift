@@ -6,66 +6,36 @@
 //
 
 import SwiftUI
-import FirestoreProtocol
 import Combine
 import FirebaseFirestore
-
-//public struct DocumentRepository<T> {
-//
-//    public typealias Publisher = AnyPublisher<T?, Error>
-//
-//    public var publisher: Publisher
-//
-//    public init<Reference: DocumentPublishable>(_ reference: Reference, content: (Reference) -> Publisher) {
-//        self.publisher = content(reference)
-//    }
-//}
+import FirestoreRepository
 
 
+class Repository {
 
-//public struct Document {
-//
-//    public typealias Reference = DocumentPublishable
-//
-//    public var reference: Reference
-//
-//    public var source: Source
-//
-//    public static func get<T: Decodable>(reference: Reference, source: Source) -> AnyPublisher<T?, Error> {
-//        return reference.get(source: source)
-//    }
-//
-//}
-//
-//@propertyWrapper public struct DocumentRepository<T> {
-//
-//    public typealias Publisher = AnyPublisher<T?, Error>
-//
-//    public var wrappedValue: Request
-//
-//    public var projectedValue: Publisher
-//
-////    public init(_ reference: Reference, content: (Reference) -> Publisher) {
-////        self.wrappedValue = reference
-////        self.projectedValue = content(reference)
-////    }
-//
-//    public init(_ request: Request) {
-//        self.wrappedValue = request
-//        self.projectedValue = request.reference.get(source: request.source)
-//    }
-//}
+    var userID: String
+
+    init(userID: String) {
+        self.userID = userID
+    }
+
+    var publisher: AnyPublisher<[User]?, Never> {
+        Firestore.firestore()
+            .collection("users")
+            .publisher(as: User.self)
+            .assertNoFailure()
+            .eraseToAnyPublisher()
+    }
+}
 
 class Interactor: ObservableObject {
 
-    typealias Reference = DocumentPublishable
-
     var cancelables: [AnyCancellable] = []
 
-    var user: AnyPublisher<User?, Error>
+    var repository: Repository
 
-    init(user: AnyPublisher<User?, Error>) {
-        self.user = user
+    init(repository: Repository) {
+        self.repository = repository
     }
 
 //    @DocumentRepository<User> var reference: Reference
@@ -99,11 +69,9 @@ struct ContentView: View {
         })
         .onAppear {
 
-            interactor.user.sink { _ in
-
-            } receiveValue: { user in
-                self.user = user
-            }
+            interactor.repository.publisher.sink { user in
+                print(user)
+            }.store(in: &interactor.cancelables)
 
 //            interactor.$repository.sink { _ in
 //
@@ -136,9 +104,7 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-            .environmentObject(
-                Interactor(user: Firestore.firestore().document("").get(source: .default))
-            )
+            .environmentObject(Interactor(repository: Repository(userID: "aa")))
 //            .environmentObject(
 //                Interactor(
 //                    repository: DocumentRepository(Firestore.firestore().document("")) { $0.get() }
