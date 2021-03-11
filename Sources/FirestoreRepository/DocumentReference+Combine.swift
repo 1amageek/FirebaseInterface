@@ -52,29 +52,29 @@ extension DocumentReference: DocumentPublishable {
         }.eraseToAnyPublisher()
     }
 
-    public func get<Document>() -> AnyPublisher<Document?, Error> where Document : Decodable {
+    public func get<Document>(as type: Document.Type) -> AnyPublisher<Document?, Error> where Document : Decodable {
         getDocument()
-            .tryMap({ try $0.data(as: Document.self)  })
+            .tryMap({ try $0.data(as: type)  })
             .eraseToAnyPublisher()
     }
 
-    public func get<Document>(source: Source = .default) -> AnyPublisher<Document?, Error> where Document : Decodable {
+    public func get<Document>(source: Source = .default, as type: Document.Type) -> AnyPublisher<Document?, Error> where Document : Decodable {
         getDocument(source: source.rawValue)
-            .tryMap({ try $0.data(as: Document.self)  })
+            .tryMap({ try $0.data(as: type)  })
             .eraseToAnyPublisher()
     }
 
-    public func publisher<Document>() -> AnyPublisher<Document?, Error> where Document : Decodable {
-        publisher(includeMetadataChanges: false)
+    public func publisher<Document>(as type: Document.Type) -> AnyPublisher<Document?, Error> where Document : Decodable {
+        publisher(includeMetadataChanges: true, as: type)
     }
 
-    public func publisher<Document>(includeMetadataChanges: Bool = false) -> AnyPublisher<Document?, Error> where Document : Decodable {
+    public func publisher<Document>(includeMetadataChanges: Bool = true, as type: Document.Type) -> AnyPublisher<Document?, Error> where Document : Decodable {
         publisher(includeMetadataChanges: includeMetadataChanges)
-            .tryMap({ try $0.data(as: Document.self)  })
+            .tryMap({ try $0.data(as: type)  })
             .eraseToAnyPublisher()
     }
 
-    public func publisher(includeMetadataChanges: Bool = false) -> AnyPublisher<DocumentSnapshot, Error> {
+    public func publisher(includeMetadataChanges: Bool = true) -> AnyPublisher<DocumentSnapshot, Error> {
         DocumentReference.Publisher(self, includeMetadataChanges: includeMetadataChanges).eraseToAnyPublisher()
     }
 }

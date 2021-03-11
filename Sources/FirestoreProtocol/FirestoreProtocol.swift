@@ -19,17 +19,17 @@ public enum FirestoreError: Error {
 }
 
 public protocol DocumentPublishable {
-    func get<Document: Decodable>() -> AnyPublisher<Document?, Error>
-    func get<Document: Decodable>(source: Source) -> AnyPublisher<Document?, Error>
-    func publisher<Document: Decodable>() -> AnyPublisher<Document?, Error>
-    func publisher<Document: Decodable>(includeMetadataChanges: Bool) -> AnyPublisher<Document?, Error>
+    func get<Document: Decodable>(as type: Document.Type) -> AnyPublisher<Document?, Error>
+    func get<Document: Decodable>(source: Source, as type: Document.Type) -> AnyPublisher<Document?, Error>
+    func publisher<Document: Decodable>(as type: Document.Type) -> AnyPublisher<Document?, Error>
+    func publisher<Document: Decodable>(includeMetadataChanges: Bool, as type: Document.Type) -> AnyPublisher<Document?, Error>
 }
 
 public protocol CollectionPublishable {
-    func get<Document: Decodable>() -> AnyPublisher<[Document]?, Error>
-    func get<Document: Decodable>(source: Source) -> AnyPublisher<[Document]?, Error>
-    func publisher<Document: Decodable>() -> AnyPublisher<[Document]?, Error>
-    func publisher<Document: Decodable>(includeMetadataChanges: Bool) -> AnyPublisher<[Document]?, Error>
+    func get<Document: Decodable>(as type: Document.Type) -> AnyPublisher<[Document]?, Error>
+    func get<Document: Decodable>(source: Source, as type: Document.Type) -> AnyPublisher<[Document]?, Error>
+    func publisher<Document: Decodable>(as type: Document.Type) -> AnyPublisher<[Document]?, Error>
+    func publisher<Document: Decodable>(includeMetadataChanges: Bool, as type: Document.Type) -> AnyPublisher<[Document]?, Error>
 }
 
 public protocol DocumentWritable {
