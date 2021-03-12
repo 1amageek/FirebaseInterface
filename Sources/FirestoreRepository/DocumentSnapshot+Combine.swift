@@ -18,7 +18,7 @@ extension DocumentSnapshot {
         private var registration: ListenerRegistration?
 
         init(subscriber: SubscriberType, documentReference: DocumentReference, includeMetadataChanges: Bool) {
-            registration = documentReference.addSnapshotListener (includeMetadataChanges: includeMetadataChanges) { [subscriber] (snapshot, error) in
+            registration = documentReference.addSnapshotListener (includeMetadataChanges: includeMetadataChanges) { (snapshot, error) in
                 if let error = error {
                     subscriber.receive(completion: .failure(error))
                 } else if let snapshot = snapshot {

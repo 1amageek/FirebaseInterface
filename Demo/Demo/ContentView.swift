@@ -19,12 +19,47 @@ class Repository {
         self.userID = userID
     }
 
-    var publisher: AnyPublisher<[User]?, Never> {
-        Firestore.firestore()
+    func usersPublisher() -> AnyPublisher<[User]?, Never> {
+        return Firestore.firestore()
             .collection("users")
             .publisher(as: User.self)
             .assertNoFailure()
             .eraseToAnyPublisher()
+    }
+
+    func itemPublisher() -> AnyPublisher<Item?, Never> {
+        return Firestore.firestore()
+            .collection("users")
+            .document("kk")
+            .publisher(as: Item.self)
+            .assertNoFailure()
+            .eraseToAnyPublisher()
+    }
+
+    func a() {
+        usersPublisher()
+            .compactMap({ $0 })
+            .flatMap { users in
+                users.map { user in
+                    Future<Item?, Never> { promise in
+                        itemPublisher().sink { item in
+                            promise(.success(item))
+                        }
+                    }
+
+                }
+            }
+
+//            .flatMap({ users in
+//                Publishers.MergeMany(users.map({ _ in BPublisher() }))
+//            })
+//            .flatMap({ _ in BPublisher() })
+
+//        Firestore.firestore()
+//            .collection("users")
+//            .publisher(as: User.self)
+//            .assertNoFailure()
+//            .eraseToAnyPublisher()
     }
 }
 
@@ -45,7 +80,9 @@ class Interactor: ObservableObject {
 //    }
 }
 
-struct User: Codable { }
+struct User: Codable {
+    var item: Item?
+}
 
 struct Item: Codable { }
 
