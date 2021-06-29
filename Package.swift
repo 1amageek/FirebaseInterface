@@ -15,7 +15,7 @@ let package = Package(
             targets: ["FirestoreRepository"]),
     ],
     dependencies: [
-        .package(name: "Firebase", url: "https://github.com/firebase/firebase-ios-sdk.git", .upToNextMajor(from: "7.6.0"))
+        .package(name: "Firebase", url: "https://github.com/firebase/firebase-ios-sdk.git", .upToNextMajor(from: "8.3.0"))
     ],
     targets: [
         .target(
